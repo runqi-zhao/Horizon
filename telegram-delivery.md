@@ -120,5 +120,7 @@ uv run horizon-webhook --delivery summary
 | 400 message is too long | 调小 `limit`，或改用 `summary_and_items` |
 | 200 但没收到消息 | 检查 `chat_id` 是否指向了别的会话；`getUpdates` 里可能有多个 chat |
 | 日志显示 skipped | `.env` 里 `TELEGRAM_WEBHOOK_URL` 为空，或没有加载 `.env` |
+| `Destination resolves to a non-public address: 198.18.x.x` | 代理开启了 fake-IP。在 `.env` 加 `HORIZON_ALLOW_FAKE_IP=1`，或让 `api.telegram.org` 走真实 DNS |
+| `Bad Request: chat not found` | `chat_id` 错误，或 bot 被移除/拉黑；重新给 bot 发消息并用 `getUpdates` 核对 |
 
 Horizon 的推送失败不会中断主流程，日报仍会写入 `data/summaries/` 和 `docs/_posts/`。
