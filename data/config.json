@@ -1,0 +1,595 @@
+{
+  "ai": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "base_url": "https://www.micuapi.ai/v1",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "throttle_sec": 0,
+    "analysis_concurrency": 2,
+    "enrichment_concurrency": 2,
+    "languages": ["zh"]
+  },
+  "processing": {
+    "profiles_dir": "profiles",
+    "default_profile": "tech-news",
+    "profile_settings": {
+      "tech-news": {
+        "threshold": 7.0,
+        "topic_dedup": true
+      },
+      "tech-blog": {
+        "threshold": 4.5,
+        "topic_dedup": false
+      },
+      "finance-news": {
+        "threshold": 6.0,
+        "topic_dedup": true
+      },
+      "deals": {
+        "threshold": 6.0,
+        "topic_dedup": true
+      }
+    }
+  },
+  "display": {
+    "icon_style": "emoji"
+  },
+  "email": {
+    "enabled": false,
+    "smtp_server": "smtp.qq.com",
+    "smtp_port": 465,
+    "imap_server": "imap.qq.com",
+    "imap_port": 993,
+    "email_address": "xxx@qq.com",
+    "sender_name": "Horizon Daily",
+    "subscribe_keyword": "SUBSCRIBE",
+    "unsubscribe_keyword": "UNSUBSCRIBE"
+  },
+  "sources": {
+    "github": [],
+    "hackernews": {
+      "enabled": true,
+      "fetch_top_stories": 30,
+      "min_score": 100,
+      "category": "tech-community",
+      "profile": ["tech-news", "tech-blog"]
+    },
+    "rss": [
+      {
+        "name": "Simon Willison",
+        "url": "https://simonwillison.net/atom/everything/",
+        "enabled": true,
+        "category": "ai-tools",
+        "profile": ["tech-news", "tech-blog"]
+      },
+      {
+        "name": "Hugging Face Blog",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "enabled": true,
+        "category": "machine-learning",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "量子位",
+        "url": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "新智元",
+        "url": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "vLLM Blog",
+        "url": "https://vllm.ai/blog/rss.xml",
+        "enabled": true,
+        "category": "llm-inference",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "LWN.net",
+        "url": "https://lwn.net/headlines/rss",
+        "enabled": true,
+        "category": "linux",
+        "profile": "tech-news"
+      },
+      {
+        "name": "The Register",
+        "url": "https://www.theregister.com/headlines.atom",
+        "enabled": true,
+        "category": "tech-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "MIT Technology Review",
+        "url": "https://www.technologyreview.com/feed/",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Sean Goedecke",
+        "url": "https://www.seangoedecke.com/rss.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "InfoQ 中文",
+        "url": "https://www.infoq.cn/feed",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Ars Technica",
+        "url": "https://feeds.arstechnica.com/arstechnica/index",
+        "enabled": true,
+        "category": "tech-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "The Verge",
+        "url": "https://www.theverge.com/rss/index.xml",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Semiconductor Engineering",
+        "url": "https://semiengineering.com/feed/",
+        "enabled": true,
+        "category": "semiconductors",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Hackaday",
+        "url": "https://hackaday.com/feed/",
+        "enabled": true,
+        "category": "hardware",
+        "profile": ["tech-news", "tech-blog"]
+      },
+      {
+        "name": "NVIDIA Blog",
+        "url": "https://blogs.nvidia.com/feed/",
+        "enabled": true,
+        "category": "ai-hardware",
+        "profile": "tech-news"
+      },
+      {
+        "name": "IEEE Spectrum Robotics",
+        "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss",
+        "enabled": true,
+        "category": "robotics",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Tom's Hardware",
+        "url": "https://www.tomshardware.com/feeds/all",
+        "enabled": true,
+        "category": "hardware",
+        "profile": "tech-news"
+      },
+      {
+        "name": "EE Times",
+        "url": "https://www.eetimes.com/feed/",
+        "enabled": true,
+        "category": "semiconductors",
+        "profile": "tech-news"
+      },
+      {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/feed/",
+        "enabled": true,
+        "category": "startups",
+        "profile": "finance-news"
+      },
+      {
+        "name": "Crunchbase News",
+        "url": "https://news.crunchbase.com/feed/",
+        "enabled": true,
+        "category": "venture",
+        "profile": "finance-news"
+      },
+      {
+        "name": "Stratechery",
+        "url": "https://stratechery.com/feed/",
+        "enabled": true,
+        "category": "business-analysis",
+        "profile": "finance-news"
+      },
+      {
+        "name": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/rss.xml",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Google AI Blog",
+        "url": "https://blog.google/technology/ai/rss/",
+        "enabled": true,
+        "category": "machine-learning",
+        "profile": "tech-news"
+      },
+      {
+        "name": "雷峰网",
+        "url": "https://www.leiphone.com/feed",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Martin Fowler",
+        "url": "https://martinfowler.com/feed.atom",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "GitHub Blog",
+        "url": "https://github.blog/feed/",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Kubernetes Blog",
+        "url": "https://kubernetes.io/feed.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Rust Blog",
+        "url": "https://blog.rust-lang.org/feed.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "TechPowerUp",
+        "url": "https://www.techpowerup.com/rss/news",
+        "enabled": true,
+        "category": "hardware",
+        "profile": "tech-news"
+      },
+      {
+        "name": "ServeTheHome",
+        "url": "https://www.servethehome.com/feed/",
+        "enabled": true,
+        "category": "hardware",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Phoronix",
+        "url": "https://www.phoronix.com/rss.php",
+        "enabled": true,
+        "category": "linux",
+        "profile": "tech-news"
+      },
+      {
+        "name": "什么值得买",
+        "url": "https://post.smzdm.com/feed/",
+        "enabled": true,
+        "category": "deals",
+        "profile": "deals"
+      },
+      {
+        "name": "少数派",
+        "url": "https://sspai.com/feed",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "爱范儿",
+        "url": "https://www.ifanr.com/feed",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-news"
+      },
+      {
+        "name": "阮一峰的网络日志",
+        "url": "https://www.ruanyifeng.com/blog/atom.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "美团技术团队",
+        "url": "https://tech.meituan.com/feed/",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "tw93",
+        "url": "https://tw93.fun/feed.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "潮流周刊",
+        "url": "https://weekly.tw93.fun/rss.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "HelloGitHub 月刊",
+        "url": "https://hellogithub.com/rss",
+        "enabled": true,
+        "category": "open-source",
+        "profile": "tech-news"
+      },
+      {
+        "name": "小众软件",
+        "url": "https://feed.appinn.com/",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "异次元软件世界",
+        "url": "https://feed.iplaysoft.com/",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "架构师之路",
+        "url": "https://plink.anyfeeder.com/weixin/gh_10a6b96351a9",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "月光博客",
+        "url": "https://www.williamlong.info/rss.xml",
+        "enabled": true,
+        "category": "tech-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Vercel News",
+        "url": "https://vercel.com/atom",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Docker Blog",
+        "url": "https://www.docker.com/feed/",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Google Open Source Blog",
+        "url": "https://opensource.googleblog.com/feeds/posts/default",
+        "enabled": true,
+        "category": "open-source",
+        "profile": "tech-news"
+      },
+      {
+        "name": "微软研究院AI头条",
+        "url": "http://feedmaker.kindle4rss.com/feeds/MSRAsia.weixin.xml",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "游研社",
+        "url": "https://www.yystv.cn/rss/feed",
+        "enabled": true,
+        "category": "consumer-tech",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Discord Blog",
+        "url": "https://discord.com/blog/rss.xml",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Airbnb Engineering",
+        "url": "https://medium.com/feed/airbnb-engineering",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Lobsters",
+        "url": "https://lobste.rs/rss",
+        "enabled": true,
+        "category": "tech-community",
+        "profile": ["tech-news", "tech-blog"]
+      },
+      {
+        "name": "The Pragmatic Engineer",
+        "url": "https://blog.pragmaticengineer.com/feed/",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Stack Overflow Blog",
+        "url": "https://stackoverflow.blog/feed/",
+        "enabled": true,
+        "category": "software-engineering",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      }
+    ],
+    "reddit": {
+      "enabled": false,
+      "subreddits": [],
+      "users": [],
+      "fetch_comments": 5
+    },
+    "twitter": {
+      "enabled": false,
+      "users": [],
+      "keywords": [],
+      "fetch_limit": 10,
+      "fetch_reply_text": false,
+      "max_replies_per_tweet": 3,
+      "max_tweets_to_expand": 10,
+      "reply_min_likes": 5,
+      "profile": "tech-news"
+    },
+    "openbb": {
+      "enabled": false,
+      "fetch_filings": false,
+      "filings_provider": "sec",
+      "watchlists": []
+    },
+    "ossinsight": {
+      "enabled": false,
+      "period": "past_24_hours",
+      "languages": ["All", "Python", "TypeScript"],
+      "keywords": [],
+      "min_stars": 10,
+      "max_items": 30,
+      "profile": "tech-news"
+    },
+    "telegram": {
+      "enabled": false,
+      "channels": []
+    },
+    "gdelt": {
+      "enabled": false,
+      "query": "artificial intelligence",
+      "mode": "ArtList",
+      "max_records": 75,
+      "timespan": null,
+      "language": null,
+      "country": null,
+      "category": "news",
+      "profile": "tech-news"
+    },
+    "google_news": {
+      "enabled": false,
+      "query": "artificial intelligence",
+      "language": "en",
+      "country": "US",
+      "ceid": null,
+      "max_results": 100,
+      "category": "news",
+      "profile": "tech-news"
+    }
+  },
+  "collection": {
+    "time_window_hours": 24
+  },
+  "digest": {
+    "max_items": 20,
+    "profile_order": ["tech-news", "tech-blog", "finance-news", "deals"],
+    "category_groups": {
+      "ai": {
+        "name": "AI / 大模型",
+        "limit": 7,
+        "categories": ["ai-news", "ai-tools", "machine-learning", "llm-inference", "ai-hardware"]
+      },
+      "engineering": {
+        "name": "软件工程 / 基础设施",
+        "limit": 7,
+        "categories": ["software-engineering", "linux", "performance", "consumer-tech", "tech-news", "tech-community", "open-source"]
+      },
+      "hardware": {
+        "name": "硬件 / 芯片 / 机器人",
+        "limit": 4,
+        "categories": ["semiconductors", "hardware", "robotics"]
+      },
+      "business": {
+        "name": "创投 / 商业",
+        "limit": 4,
+        "categories": ["startups", "venture", "business-analysis"]
+      },
+      "deals": {
+        "name": "好价精选",
+        "limit": 3,
+        "categories": ["deals"]
+      }
+    },
+    "default_group": "other",
+    "default_group_limit": 2
+  },
+  "webhook": {
+    "enabled": false,
+    "url_env": "HORIZON_WEBHOOK_URL",
+    "delivery": "summary",
+    "overview_position": "first",
+    "platform": "feishu",
+    "layout": "collapsible",
+    "fallback_layout": "markdown",
+    "languages": ["zh"],
+    "request_body": {
+      "msg_type": "interactive",
+      "card": {
+        "schema": "2.0",
+        "config": {
+          "wide_screen_mode": true
+        },
+        "header": {
+          "title": {
+            "tag": "plain_text",
+            "content": "#{message_title}"
+          },
+          "template": "blue"
+        },
+        "body": {
+          "elements": [
+            {
+              "tag": "markdown",
+              "content": "Horizon 生成结果: #{result}\n重要资讯: #{important_items}/#{all_items}"
+            },
+            {
+              "tag": "hr"
+            },
+            {
+              "tag": "markdown",
+              "content": "#{summary}"
+            }
+          ]
+        }
+      }
+    },
+    "headers": ""
+  },
+  "wechat": {
+    "enabled": false,
+    "languages": null,
+    "chunk_size": 4000
+  }
+}
