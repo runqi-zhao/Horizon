@@ -28,7 +28,7 @@
         "topic_dedup": true
       },
       "deals": {
-        "threshold": 6.0,
+        "threshold": 4.0,
         "topic_dedup": true
       }
     }
