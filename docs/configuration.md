@@ -741,6 +741,16 @@ configured profile thresholds still apply.
 
 Any string value in the active config file supports `${VAR_NAME}` syntax. Variables are expanded at runtime from the environment (including values loaded from `.env`). This lets you keep secrets, tenant-specific endpoints, and private URLs out of the checked-in JSON file.
 
+### Proxy fake-IP addresses
+
+Horizon rejects URLs whose hostnames resolve to non-public addresses. Clash/mihomo fake-IP mode maps every domain into `198.18.0.0/15`, which triggers that check and breaks article extraction and webhook delivery with messages such as `Destination resolves to a non-public address: 198.18.0.21`.
+
+Set `HORIZON_ALLOW_FAKE_IP=1` in `.env` to treat only that range as a proxy placeholder. Other private, loopback, and link-local ranges remain rejected. The safer alternative is to exclude the affected domains from fake-IP in the proxy, or switch the proxy DNS to `redir-host`.
+
+```dotenv
+HORIZON_ALLOW_FAKE_IP=1
+```
+
 Example:
 
 ```json

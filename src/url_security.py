@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import ipaddress
+import os
 import socket
 from urllib.parse import urljoin, urlsplit
 
@@ -12,6 +13,17 @@ import httpx
 
 class UnsafeURLError(ValueError):
     """Raised when a URL may target a non-public network resource."""
+
+
+# Address range used by Clash/mihomo fake-IP mode. Domains behind such a proxy
+# resolve to these addresses while the proxy performs the real resolution.
+_FAKE_IP_NETWORK = ipaddress.ip_network("198.18.0.0/15")
+_FAKE_IP_ENV = "HORIZON_ALLOW_FAKE_IP"
+
+
+def _fake_ip_allowed() -> bool:
+    """Return whether fake-IP proxy addresses are explicitly trusted."""
+    return os.environ.get(_FAKE_IP_ENV, "").strip().lower() in {"1", "true", "yes"}
 
 
 def validate_http_url(url: str) -> str:
@@ -70,6 +82,8 @@ async def validate_public_http_url(url: str) -> str:
             ip = ipaddress.ip_address(address.split("%", 1)[0])
         except ValueError as exc:
             raise UnsafeURLError(f"Resolver returned an invalid address: {address}") from exc
+        if _fake_ip_allowed() and ip in _FAKE_IP_NETWORK:
+            continue
         if (
             not ip.is_global
             or ip.is_loopback

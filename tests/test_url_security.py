@@ -100,3 +100,32 @@ def test_public_relative_redirect_is_followed():
     assert result is success
     assert client.get.await_args_list[1].args == ("https://example.com/next",)
     assert client.get.await_args_list[1].kwargs == {"follow_redirects": False}
+
+
+def test_fake_ip_destinations_are_rejected_by_default(monkeypatch):
+    monkeypatch.delenv("HORIZON_ALLOW_FAKE_IP", raising=False)
+    with patch(
+        "src.url_security._resolve_hostname",
+        new=AsyncMock(return_value={"198.18.0.21"}),
+    ):
+        with pytest.raises(UnsafeURLError, match="non-public"):
+            _run(validate_public_http_url("https://example.com/hook"))
+
+
+def test_fake_ip_destinations_allowed_when_opted_in(monkeypatch):
+    monkeypatch.setenv("HORIZON_ALLOW_FAKE_IP", "1")
+    with patch(
+        "src.url_security._resolve_hostname",
+        new=AsyncMock(return_value={"198.18.0.21"}),
+    ):
+        assert _run(validate_public_http_url("https://example.com/hook"))
+
+
+def test_fake_ip_opt_in_still_rejects_private_ranges(monkeypatch):
+    monkeypatch.setenv("HORIZON_ALLOW_FAKE_IP", "1")
+    with patch(
+        "src.url_security._resolve_hostname",
+        new=AsyncMock(return_value={"10.0.0.2"}),
+    ):
+        with pytest.raises(UnsafeURLError, match="non-public"):
+            _run(validate_public_http_url("https://example.com/hook"))
